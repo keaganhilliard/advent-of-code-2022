@@ -1,5 +1,4 @@
-use day1::day1::process_elves;
-use day2::{problem1::calculate_score, problem2::calculate_score_again};
+use day3::{problem1::sum_priorities, problem2::get_badge};
 
 mod day1 {
     pub mod day1;
@@ -10,6 +9,12 @@ mod day2 {
     pub mod problem2;
 }
 
+mod day3 {
+    pub mod problem1;
+    pub mod problem2;
+}
+
+
 fn main() {
-    calculate_score_again();
+    get_badge();
 }

@@ -44,13 +44,8 @@ pub fn problem1() {
             );
 
             for _ in 0..*count {
-                let mut val: Option<char> = None;
-                {
-                    let from_vec = &mut stack_vec[*from - 1];
-                    val = from_vec.pop_back();
-                }
-                let to_vec = &mut stack_vec[*to - 1];
-                to_vec.push_back(val.unwrap());
+                let val = stack_vec[*from - 1].pop_back().unwrap();
+                stack_vec[*to - 1].push_back(val);
             }
         }
     }
@@ -108,8 +103,7 @@ pub fn problem2() {
 
             let mut moves = VecDeque::new();
             for _ in 0..*count {
-                let from_vec = &mut stack_vec[*from - 1];
-                let val = from_vec.pop_back().unwrap();
+                let val = stack_vec[*from - 1].pop_back().unwrap();
                 moves.push_front(val);
             }
             for val in moves {

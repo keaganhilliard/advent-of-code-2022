@@ -24,4 +24,6 @@ fn main() {
     day2::day2::problem2();
     day3::day3::problem1();
     day3::day3::problem2();
+    day4::day4::problem1();
+    day4::day4::problem2();
 }

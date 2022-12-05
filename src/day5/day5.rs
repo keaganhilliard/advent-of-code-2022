@@ -84,18 +84,18 @@ pub fn problem2() {
         for move_crate in moves.split("\n") {
             let caps = move_regex.captures(move_crate).unwrap();
             let (count, from, to) = (
-                &caps["count"].parse::<usize>().unwrap(),
-                &caps["from"].parse::<usize>().unwrap(),
-                &caps["to"].parse::<usize>().unwrap(),
+                *&caps["count"].parse::<usize>().unwrap(),
+                *&caps["from"].parse::<usize>().unwrap(),
+                *&caps["to"].parse::<usize>().unwrap(),
             );
 
             let mut moves = VecDeque::new();
-            for _ in 0..*count {
-                let val = stack_vec[*from - 1].pop_back().unwrap();
+            for _ in 0..count {
+                let val = stack_vec[from - 1].pop_back().unwrap();
                 moves.push_front(val);
             }
             for val in moves {
-                let to_vec = &mut stack_vec[*to - 1];
+                let to_vec = &mut stack_vec[to - 1];
                 to_vec.push_back(val);
             }
         }

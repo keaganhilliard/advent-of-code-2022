@@ -31,14 +31,14 @@ pub fn problem1() {
         for move_crate in moves.split("\n") {
             let caps = move_regex.captures(move_crate).unwrap();
             let (count, from, to) = (
-                &caps["count"].parse::<usize>().unwrap(),
-                &caps["from"].parse::<usize>().unwrap(),
-                &caps["to"].parse::<usize>().unwrap(),
+                *&caps["count"].parse::<usize>().unwrap(),
+                *&caps["from"].parse::<usize>().unwrap(),
+                *&caps["to"].parse::<usize>().unwrap(),
             );
 
-            for _ in 0..*count {
-                let val = stack_vec[*from - 1].pop_back().unwrap();
-                stack_vec[*to - 1].push_back(val);
+            for _ in 0..count {
+                let val = stack_vec[from - 1].pop_back().unwrap();
+                stack_vec[to - 1].push_back(val);
             }
         }
     }

@@ -56,8 +56,10 @@ pub fn problem1() {
             message_vec.push(*c);
         }
     }
-    let message = message_vec.iter().copied().collect::<String>();
-    println!("Day 5, Problem 1: {}", message);
+    println!(
+        "Day 5, Problem 1: {}",
+        message_vec.iter().copied().collect::<String>()
+    );
 }
 
 pub fn problem2() {
@@ -119,6 +121,8 @@ pub fn problem2() {
             message_vec.push(*c);
         }
     }
-    let message = message_vec.iter().copied().collect::<String>();
-    println!("Day 5, Problem 2: {}", message);
+    println!(
+        "Day 5, Problem 2: {}",
+        message_vec.iter().copied().collect::<String>()
+    );
 }

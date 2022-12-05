@@ -5,17 +5,7 @@ use regex::Regex;
 pub fn problem1() {
     let contents = fs::read_to_string("src/day5/input.txt").expect("Should have found a file");
 
-    let mut stack_vec = vec![
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-    ];
+    let mut stack_vec = vec![VecDeque::new()];
     let move_regex = Regex::new(r"move (?P<count>\d+) from (?P<from>\d+) to (?P<to>\d+)").unwrap();
 
     if let &[stacks, moves] = contents.split("\n\n").collect::<Vec<&str>>().as_slice() {
@@ -31,6 +21,7 @@ pub fn problem1() {
                 if position == 4 {
                     current_stack_index += 1;
                     position = 0;
+                    stack_vec.push(VecDeque::new());
                 }
             }
             current_stack_index = 0;
@@ -65,17 +56,7 @@ pub fn problem1() {
 pub fn problem2() {
     let contents = fs::read_to_string("src/day5/input.txt").expect("Should have found a file");
 
-    let mut stack_vec = vec![
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-        VecDeque::new(),
-    ];
+    let mut stack_vec = vec![VecDeque::new()];
     let move_regex = Regex::new(r"move (?P<count>\d+) from (?P<from>\d+) to (?P<to>\d+)").unwrap();
 
     if let &[stacks, moves] = contents.split("\n\n").collect::<Vec<&str>>().as_slice() {
@@ -91,6 +72,7 @@ pub fn problem2() {
                 if position == 4 {
                     current_stack_index += 1;
                     position = 0;
+                    stack_vec.push(VecDeque::new());
                 }
             }
             current_stack_index = 0;

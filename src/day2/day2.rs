@@ -28,7 +28,6 @@ pub fn problem1() {
     println!("Day 2, Problem 1: {}", total_score);
 }
 
-
 use std::str::FromStr;
 
 enum WhatToDo {

@@ -21,10 +21,9 @@ pub fn problem1() {
 
         let intersection = elf_ranges[0].intersection(&elf_ranges[1]);
         let count = intersection.count();
-        if  count == elf_ranges[0].len() || count == elf_ranges[1].len() {
+        if count == elf_ranges[0].len() || count == elf_ranges[1].len() {
             overlappers += 1;
         }
-
     }
     println!("Day 4, Problem 1: {:?}", overlappers);
 }
@@ -50,10 +49,9 @@ pub fn problem2() {
 
         let intersection = elf_ranges[0].intersection(&elf_ranges[1]);
         let count = intersection.count();
-        if  count > 0 {
+        if count > 0 {
             overlappers += 1;
         }
-
     }
     println!("Day 4, Problem 2: {:?}", overlappers);
 }

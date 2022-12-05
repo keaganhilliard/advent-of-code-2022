@@ -6,14 +6,13 @@ pub fn problem1() {
 
     let contents = fs::read_to_string("src/day3/input.txt").expect("Should have found a file");
     let mut dups = Vec::new();
-    
+
     for sack in contents.split("\n") {
-        let mid = sack.len()/2;
-        
+        let mid = sack.len() / 2;
+
         let mut first_compartment = Vec::new();
         let mut second_compartment = Vec::new();
         let mut both = HashSet::new();
-
 
         for (i, c) in sack.char_indices() {
             if i < mid {
@@ -29,9 +28,8 @@ pub fn problem1() {
         for c in both {
             dups.push(c);
         }
-        
     }
-    
+
     let mut sum = 0;
     for c in dups {
         if let Some(priority) = priorities.find(&c.to_string()) {
@@ -39,7 +37,6 @@ pub fn problem1() {
         }
     }
     println!("Day 3, Problem 1: {:?}", sum);
-
 }
 
 pub fn problem2() {
@@ -63,16 +60,16 @@ pub fn problem2() {
 
         let mut iter = elves.iter();
         let base = iter.next().unwrap().clone();
-        let intersection = iter.fold(base, |set1, set2| set1.intersection(set2).copied().collect());
+        let intersection = iter.fold(base, |set1, set2| {
+            set1.intersection(set2).copied().collect()
+        });
 
         for c in intersection {
             if let Some(priority) = priorities.find(&c.to_string()) {
                 sum += priority;
             }
         }
-
     }
-    
-    println!("Day 3, Problem 2: {:?}", sum);
 
+    println!("Day 3, Problem 2: {:?}", sum);
 }

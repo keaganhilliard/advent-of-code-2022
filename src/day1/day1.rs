@@ -28,7 +28,6 @@ fn get_elves() -> Vec<Elf> {
 
 pub fn problem1() {
     println!("Day 1, Problem 1: {:?}", get_elves()[0].calories);
-
 }
 
 pub fn problem2() {

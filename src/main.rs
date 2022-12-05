@@ -1,5 +1,3 @@
-
-
 mod day1 {
     pub mod day1;
 }
@@ -19,7 +17,6 @@ mod day4 {
 mod day5 {
     pub mod day5;
 }
-
 
 fn main() {
     day1::day1::problem1();

@@ -13,8 +13,7 @@ mod day3 {
 }
 
 mod day4 {
-    pub mod problem1;
-    pub mod problem2;
+    pub mod day4;
 }
 
 

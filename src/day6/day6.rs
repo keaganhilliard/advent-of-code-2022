@@ -4,15 +4,16 @@ use std::{
 };
 
 pub fn problem1() {
-    println!("Day 6, Problem 1: {}", get_start(4));
+    let contents = fs::read_to_string("src/day6/input.txt").expect("Should have found a file");
+    println!("Day 6, Problem 1: {}", index_after_unique(contents, 4));
 }
 
 pub fn problem2() {
-    println!("Day 6, Problem 2: {}", get_start(14));
+    let contents = fs::read_to_string("src/day6/input.txt").expect("Should have found a file");
+    println!("Day 6, Problem 2: {}", index_after_unique(contents, 14));
 }
 
-fn get_start(limit: usize) -> usize {
-    let contents = fs::read_to_string("src/day6/input.txt").expect("Should have found a file");
+fn index_after_unique(contents: String, limit: usize) -> usize {
     let mut char_set = VecDeque::new();
     for (i, c) in contents.char_indices() {
         char_set.push_back(c);
@@ -25,4 +26,64 @@ fn get_start(limit: usize) -> usize {
         }
     }
     0
+}
+
+#[test]
+fn problem1_test() {
+    let key_length = 4;
+
+    let input = "mjqjpqmgbljsphdztnvjfqwrcgsmlb".to_string();
+    let expected = 7;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+
+    let input = "bvwbjplbgvbhsrlpgdmjqwftvncz".to_string();
+    let expected = 5;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+
+    let input = "nppdvjthqldpwncqszvftbrmjlhg".to_string();
+    let expected = 6;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+
+    let input = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg".to_string();
+    let expected = 10;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+
+    let input = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw".to_string();
+    let expected = 11;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+}
+
+#[test]
+fn problem2_test() {
+    let key_length = 14;
+
+    let input = "mjqjpqmgbljsphdztnvjfqwrcgsmlb".to_string();
+    let expected = 19;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+
+    let input = "bvwbjplbgvbhsrlpgdmjqwftvncz".to_string();
+    let expected = 23;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+
+    let input = "nppdvjthqldpwncqszvftbrmjlhg".to_string();
+    let expected = 23;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+
+    let input = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg".to_string();
+    let expected = 29;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
+
+    let input = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw".to_string();
+    let expected = 26;
+    let actual = index_after_unique(input, key_length);
+    assert_eq!(actual, expected);
 }

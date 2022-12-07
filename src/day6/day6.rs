@@ -1,15 +1,12 @@
-use std::{
-    collections::{HashSet, VecDeque},
-    fs,
-};
+use std::collections::{HashSet, VecDeque};
 
 pub fn problem1() {
-    let contents = fs::read_to_string("src/day6/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
     println!("Day 6, Problem 1: {}", index_after_unique(&contents, 4));
 }
 
 pub fn problem2() {
-    let contents = fs::read_to_string("src/day6/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
     println!("Day 6, Problem 2: {}", index_after_unique(&contents, 14));
 }
 

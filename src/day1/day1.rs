@@ -4,8 +4,7 @@ struct Elf {
 }
 
 fn get_elves() -> Vec<Elf> {
-    use std::fs;
-    let contents = fs::read_to_string("src/day1/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
 
     let mut elves: Vec<Elf> = Vec::new();
 

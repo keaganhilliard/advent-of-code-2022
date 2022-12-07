@@ -1,9 +1,7 @@
 use std::collections::HashSet;
 
 pub fn problem1() {
-    use std::fs;
-
-    let contents = fs::read_to_string("src/day4/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
 
     let mut overlappers = 0;
 
@@ -29,9 +27,7 @@ pub fn problem1() {
 }
 
 pub fn problem2() {
-    use std::fs;
-
-    let contents = fs::read_to_string("src/day4/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
 
     let mut overlappers = 0;
 

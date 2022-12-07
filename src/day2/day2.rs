@@ -1,10 +1,9 @@
 use std::collections::HashMap;
 
 pub fn problem1() {
-    use std::fs;
     let values = HashMap::from([("A", 1), ("X", 1), ("B", 2), ("Y", 2), ("C", 3), ("Z", 3)]);
 
-    let contents = fs::read_to_string("src/day2/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
 
     let mut total_score = 0;
     for round in contents.split("\n") {
@@ -50,10 +49,9 @@ impl FromStr for WhatToDo {
 }
 
 pub fn problem2() {
-    use std::fs;
     let values = HashMap::from([("A", 1), ("B", 2), ("C", 3)]);
 
-    let contents = fs::read_to_string("src/day2/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
 
     let mut total_score = 0;
     for round in contents.split("\n") {

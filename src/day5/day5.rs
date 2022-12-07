@@ -1,12 +1,9 @@
-use std::{collections::VecDeque, fs};
-
-use regex::Regex;
+use std::collections::VecDeque;
 
 pub fn problem1() {
-    let contents = fs::read_to_string("src/day5/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
 
     let mut stack_vec = Vec::new();
-    let move_regex = Regex::new(r"move (?P<count>\d+) from (?P<from>\d+) to (?P<to>\d+)").unwrap();
 
     if let &[stacks, moves] = contents.split("\n\n").collect::<Vec<&str>>().as_slice() {
         let mut current_stack_index = 0;
@@ -29,12 +26,7 @@ pub fn problem1() {
             current_stack_index = 0;
         }
         for move_crate in moves.split("\n") {
-            let caps = move_regex.captures(move_crate).unwrap();
-            let (count, from, to) = (
-                *&caps["count"].parse::<usize>().unwrap(),
-                *&caps["from"].parse::<usize>().unwrap(),
-                *&caps["to"].parse::<usize>().unwrap(),
-            );
+            let (count, from, to) = parse_moves(move_crate);
 
             for _ in 0..count {
                 let val = stack_vec[from - 1].pop_back().unwrap();
@@ -56,10 +48,9 @@ pub fn problem1() {
 }
 
 pub fn problem2() {
-    let contents = fs::read_to_string("src/day5/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
 
     let mut stack_vec = Vec::new();
-    let move_regex = Regex::new(r"move (?P<count>\d+) from (?P<from>\d+) to (?P<to>\d+)").unwrap();
 
     if let &[stacks, moves] = contents.split("\n\n").collect::<Vec<&str>>().as_slice() {
         let mut current_stack_index = 0;
@@ -82,13 +73,7 @@ pub fn problem2() {
             current_stack_index = 0;
         }
         for move_crate in moves.split("\n") {
-            let caps = move_regex.captures(move_crate).unwrap();
-            let (count, from, to) = (
-                *&caps["count"].parse::<usize>().unwrap(),
-                *&caps["from"].parse::<usize>().unwrap(),
-                *&caps["to"].parse::<usize>().unwrap(),
-            );
-
+            let (count, from, to) = parse_moves(move_crate);
             let mut moves = VecDeque::new();
             for _ in 0..count {
                 let val = stack_vec[from - 1].pop_back().unwrap();
@@ -111,4 +96,15 @@ pub fn problem2() {
         "Day 5, Problem 2: {}",
         message_vec.iter().copied().collect::<String>()
     );
+}
+
+fn parse_moves(move_crate: &str) -> (usize, usize, usize) {
+    return match move_crate.split(" ").collect::<Vec<&str>>().as_slice() {
+        &["move", count, "from", from, "to", to] => (
+            count.parse::<usize>().unwrap(),
+            from.parse::<usize>().unwrap(),
+            to.parse::<usize>().unwrap(),
+        ),
+        _ => (0, 0, 0),
+    };
 }

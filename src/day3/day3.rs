@@ -2,9 +2,8 @@ use std::collections::HashSet;
 
 pub fn problem1() {
     let priorities = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    use std::fs;
 
-    let contents = fs::read_to_string("src/day3/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
     let mut dups = Vec::new();
 
     for sack in contents.split("\n") {
@@ -41,9 +40,8 @@ pub fn problem1() {
 
 pub fn problem2() {
     let priorities = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    use std::fs;
 
-    let contents = fs::read_to_string("src/day3/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
     let mut sum = 0;
 
     let sacks: Vec<&str> = contents.split("\n").collect();

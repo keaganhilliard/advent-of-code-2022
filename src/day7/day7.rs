@@ -1,10 +1,7 @@
-use std::{
-    collections::{HashMap, VecDeque},
-    fs,
-};
+use std::collections::{HashMap, VecDeque};
 
 pub fn problem1() {
-    let contents = fs::read_to_string("src/day7/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
     let dirs = process_commands(&contents);
 
     println!(
@@ -14,7 +11,7 @@ pub fn problem1() {
 }
 
 pub fn problem2() {
-    let contents = fs::read_to_string("src/day7/input.txt").expect("Should have found a file");
+    let contents = include_str!("input.txt");
     let dirs = process_commands(&contents);
 
     println!(
@@ -89,14 +86,14 @@ fn process_commands(contents: &str) -> HashMap<String, i32> {
 
 #[test]
 fn problem1_test() {
-    let contents = fs::read_to_string("src/day7/tester.txt").expect("Should have found a file");
+    let contents = include_str!("tester.txt");
     let dirs = process_commands(&contents);
     assert_eq!(95437, get_total_less_than_limit(dirs, 100000));
 }
 
 #[test]
 fn problem2_test() {
-    let contents = fs::read_to_string("src/day7/tester.txt").expect("Should have found a file");
+    let contents = include_str!("tester.txt");
     let dirs = process_commands(&contents);
     assert_eq!(24933642, get_space_to_delete(dirs, 70000000, 30000000));
 }

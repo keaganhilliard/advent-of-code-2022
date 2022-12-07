@@ -6,22 +6,38 @@ use std::{
 pub fn problem1() {
     let contents = fs::read_to_string("src/day7/input.txt").expect("Should have found a file");
     let dirs = process_commands(&contents);
-    let mut sum = 0;
-    for (_, size) in dirs {
-        if size <= 100000 {
-            sum += size;
-        }
-    }
-    println!("Day 7, Problem 1: {}", sum);
+
+    println!(
+        "Day 7, Problem 1: {}",
+        get_total_less_than_limit(dirs, 100000)
+    );
 }
 
 pub fn problem2() {
     let contents = fs::read_to_string("src/day7/input.txt").expect("Should have found a file");
     let dirs = process_commands(&contents);
+
+    println!(
+        "Day 7, Problem 2: {}",
+        get_space_to_delete(dirs, 70000000, 30000000)
+    );
+}
+
+fn get_total_less_than_limit(dirs: HashMap<String, i32>, limit: i32) -> i32 {
+    let mut sum = 0;
+    for (_, size) in dirs {
+        if size <= limit {
+            sum += size;
+        }
+    }
+    sum
+}
+
+fn get_space_to_delete(dirs: HashMap<String, i32>, total_space: i32, needed_space: i32) -> i32 {
     let mut best_dir = 0;
     let total_space_used = dirs.get("/").unwrap();
-    let total_unused_space = 70000000 - total_space_used;
-    let total_space_needed = 30000000 - total_unused_space;
+    let total_unused_space = total_space - total_space_used;
+    let total_space_needed = needed_space - total_unused_space;
     for (_, size) in dirs {
         if size > total_space_needed {
             if best_dir == 0 {
@@ -32,7 +48,7 @@ pub fn problem2() {
             }
         }
     }
-    println!("Day 7, Problem 2: {}", best_dir);
+    best_dir
 }
 
 fn process_commands(contents: &str) -> HashMap<String, i32> {
@@ -69,4 +85,18 @@ fn process_commands(contents: &str) -> HashMap<String, i32> {
         }
     }
     dirs
+}
+
+#[test]
+fn problem1_test() {
+    let contents = fs::read_to_string("src/day7/tester.txt").expect("Should have found a file");
+    let dirs = process_commands(&contents);
+    assert_eq!(95437, get_total_less_than_limit(dirs, 100000));
+}
+
+#[test]
+fn problem2_test() {
+    let contents = fs::read_to_string("src/day7/tester.txt").expect("Should have found a file");
+    let dirs = process_commands(&contents);
+    assert_eq!(24933642, get_space_to_delete(dirs, 70000000, 30000000));
 }

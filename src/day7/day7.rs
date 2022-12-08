@@ -51,23 +51,24 @@ fn get_space_to_delete(dirs: HashMap<String, i32>, total_space: i32, needed_spac
 fn process_commands(contents: &str) -> HashMap<String, i32> {
     let mut dir_vec = VecDeque::new();
     let mut dirs = HashMap::new();
-    let mut current_dir = String::from("");
+    let mut current_dir = String::new();
     for command in contents.split("\n") {
         match command.split(" ").collect::<Vec<&str>>().as_slice() {
             &["$", "cd", ".."] => {
                 current_dir = dir_vec.pop_back().unwrap();
+            }
+            &["$", "cd", "/"] => {
+                current_dir += "/";
             }
             &["$", "cd", path] => {
                 if current_dir != "" {
                     dir_vec.push_back(current_dir.clone());
                     dirs.entry(current_dir.clone()).or_insert(0);
                 }
-                if path == "/" {
-                    current_dir = "/".to_string();
-                } else if current_dir == "/" {
-                    current_dir = vec![current_dir.clone(), path.to_string()].join("").into();
+                if current_dir == "/" {
+                    current_dir = current_dir.clone() + path;
                 } else {
-                    current_dir = vec![current_dir.clone(), path.to_string()].join("/").into();
+                    current_dir = current_dir.clone() + "/" + path;
                 }
             }
             &["$", "ls"] => {}

@@ -1,33 +1,35 @@
 pub fn problem1() {
     let contents = include_str!("input.txt");
-    let mut columns = Vec::new();
-    let mut rows_vec = Vec::new();
+    let (columns, rows) = get_columns_and_rows(contents);
+
     let mut total_visible = 0;
-
-    for row in contents.split("\n") {
-        let mut row_vec = Vec::new();
-        for (i, c) in row.char_indices() {
-            let height = c.to_string().parse::<i32>().unwrap();
-            if columns.len() == i {
-                columns.push(vec![])
-            }
-            let column = &mut columns[i];
-            column.push(height);
-            row_vec.push(height);
-        }
-        rows_vec.push(row_vec);
-    }
-
-    for column_index in 0..rows_vec.len() {
-        let row_vec = &rows_vec[column_index];
-        for row_index in 0..row_vec.len() {
-            if is_visible(row_index, column_index, &row_vec, &columns[row_index]) {
+    for column_index in 0..rows.len() {
+        let row = &rows[column_index];
+        for row_index in 0..row.len() {
+            if is_visible(row_index, column_index, &row, &columns[row_index]) {
                 total_visible += 1;
             }
         }
     }
 
     println!("Day 8, Problem 1: {}", total_visible);
+}
+
+pub fn problem2() {
+    let contents = include_str!("input.txt");
+    let (columns, rows) = get_columns_and_rows(contents);
+
+    let mut highest_score = 0;
+    for column_index in 0..rows.len() {
+        let row = &rows[column_index];
+        for row_index in 0..row.len() {
+            let scenic_score = get_scenic_score(row_index, column_index, row, &columns[row_index]);
+            if scenic_score > highest_score {
+                highest_score = scenic_score;
+            }
+        }
+    }
+    println!("Day 8, Problem 2: {}", highest_score);
 }
 
 fn is_visible(row_index: usize, column_index: usize, row: &Vec<i32>, column: &Vec<i32>) -> bool {
@@ -59,9 +61,7 @@ fn get_scenic_score(
     row: &Vec<i32>,
     column: &Vec<i32>,
 ) -> i32 {
-    let row_score = get_vec_scenic_score(row_index, row);
-    let column_score = get_vec_scenic_score(column_index, column);
-    row_score * column_score
+    get_vec_scenic_score(row_index, row) * get_vec_scenic_score(column_index, column)
 }
 
 fn get_vec_scenic_score(index: usize, vec: &Vec<i32>) -> i32 {
@@ -85,11 +85,9 @@ fn get_vec_scenic_score(index: usize, vec: &Vec<i32>) -> i32 {
     visible_to_end * visible_to_beginning
 }
 
-pub fn problem2() {
-    let contents = include_str!("input.txt");
+fn get_columns_and_rows(contents: &str) -> (Vec<Vec<i32>>, Vec<Vec<i32>>) {
     let mut columns = Vec::new();
-    let mut rows_vec = Vec::new();
-    let mut highest_score = 0;
+    let mut rows = Vec::new();
 
     for row in contents.split("\n") {
         let mut row_vec = Vec::new();
@@ -103,18 +101,7 @@ pub fn problem2() {
             row_vec.push(height);
         }
 
-        rows_vec.push(row_vec);
+        rows.push(row_vec);
     }
-
-    for column_index in 0..rows_vec.len() {
-        let row_vec = &rows_vec[column_index];
-        for row_index in 0..row_vec.len() {
-            let scenic_score =
-                get_scenic_score(row_index, column_index, row_vec, &columns[row_index]);
-            if scenic_score > highest_score {
-                highest_score = scenic_score;
-            }
-        }
-    }
-    println!("Day 8, Problem 2: {}", highest_score);
+    (columns, rows)
 }

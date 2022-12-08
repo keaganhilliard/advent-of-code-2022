@@ -39,16 +39,14 @@ fn is_visible(row_index: usize, column_index: usize, row: &Vec<i32>, column: &Ve
 fn is_visible_in_vec(index: usize, vec: &Vec<i32>) -> bool {
     let tree = vec[index];
     let mut visible_to_beginning = true;
-    for j in 0..index {
-        let compare_tree = vec[j];
-        if compare_tree >= tree {
+    for compare_tree in vec.iter().take(index).rev() {
+        if compare_tree >= &tree {
             visible_to_beginning = false;
         }
     }
     let mut visible_to_end = true;
-    for j in index + 1..vec.len() {
-        let compare_tree = vec[j];
-        if compare_tree >= tree {
+    for compare_tree in vec.iter().skip(index + 1) {
+        if compare_tree >= &tree {
             visible_to_end = false;
         }
     }
@@ -67,18 +65,16 @@ fn get_scenic_score(
 fn get_vec_scenic_score(index: usize, vec: &Vec<i32>) -> i32 {
     let tree = vec[index];
     let mut visible_to_beginning = 0;
-    for j in (0..index).rev() {
-        let compare_tree = vec[j];
+    for compare_tree in vec.iter().take(index).rev() {
         visible_to_beginning += 1;
-        if compare_tree >= tree {
+        if compare_tree >= &tree {
             break;
         }
     }
     let mut visible_to_end = 0;
-    for j in index + 1..vec.len() {
-        let compare_tree = vec[j];
+    for compare_tree in vec.iter().skip(index + 1) {
         visible_to_end += 1;
-        if compare_tree >= tree {
+        if compare_tree >= &tree {
             break;
         }
     }

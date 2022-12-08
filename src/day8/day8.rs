@@ -42,12 +42,14 @@ fn is_visible_in_vec(index: usize, vec: &Vec<i32>) -> bool {
     for compare_tree in vec.iter().take(index).rev() {
         if compare_tree >= &tree {
             visible_to_beginning = false;
+            break;
         }
     }
     let mut visible_to_end = true;
     for compare_tree in vec.iter().skip(index + 1) {
         if compare_tree >= &tree {
             visible_to_end = false;
+            break;
         }
     }
     visible_to_end || visible_to_beginning

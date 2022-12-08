@@ -67,8 +67,8 @@ fn get_scenic_score(
 fn get_vec_scenic_score(index: usize, vec: &Vec<i32>) -> i32 {
     let tree = vec[index];
     let mut visible_to_beginning = 0;
-    for j in 1..=index {
-        let compare_tree = vec[index - j];
+    for j in (0..index).rev() {
+        let compare_tree = vec[j];
         visible_to_beginning += 1;
         if compare_tree >= tree {
             break;

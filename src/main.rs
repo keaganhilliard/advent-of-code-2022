@@ -30,6 +30,10 @@ mod day8 {
     pub mod day8;
 }
 
+mod day9 {
+    pub mod day9;
+}
+
 fn main() {
     day1::day1::problem1();
     day1::day1::problem2();
@@ -47,4 +51,6 @@ fn main() {
     day7::day7::problem2();
     day8::day8::problem1();
     day8::day8::problem2();
+    day9::day9::problem1();
+    day9::day9::problem2();
 }

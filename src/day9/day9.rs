@@ -15,42 +15,35 @@ pub fn problem1() {
     tail_positions.insert(current_tail_pos.clone());
     for head_move in contents.split("\n") {
         match head_move.split(" ").collect::<Vec<&str>>().as_slice() {
-            ["L", val] => {
+            [dir, val] => {
                 for _ in 0..val.parse::<usize>().unwrap() {
-                    current_head_pos = Position {
-                        x: current_head_pos.x - 1,
-                        y: current_head_pos.y,
-                    };
-                    current_tail_pos = calculate_new_tail(current_head_pos, current_tail_pos);
-                    tail_positions.insert(current_tail_pos);
-                }
-            }
-            ["R", val] => {
-                for _ in 0..val.parse::<usize>().unwrap() {
-                    current_head_pos = Position {
-                        x: current_head_pos.x + 1,
-                        y: current_head_pos.y,
-                    };
-                    current_tail_pos = calculate_new_tail(current_head_pos, current_tail_pos);
-                    tail_positions.insert(current_tail_pos);
-                }
-            }
-            ["U", val] => {
-                for _ in 0..val.parse::<usize>().unwrap() {
-                    current_head_pos = Position {
-                        x: current_head_pos.x,
-                        y: current_head_pos.y + 1,
-                    };
-                    current_tail_pos = calculate_new_tail(current_head_pos, current_tail_pos);
-                    tail_positions.insert(current_tail_pos);
-                }
-            }
-            ["D", val] => {
-                for _ in 0..val.parse::<usize>().unwrap() {
-                    current_head_pos = Position {
-                        x: current_head_pos.x,
-                        y: current_head_pos.y - 1,
-                    };
+                    match *dir {
+                        "L" => {
+                            current_head_pos = Position {
+                                x: current_head_pos.x - 1,
+                                y: current_head_pos.y,
+                            }
+                        }
+                        "R" => {
+                            current_head_pos = Position {
+                                x: current_head_pos.x + 1,
+                                y: current_head_pos.y,
+                            }
+                        }
+                        "U" => {
+                            current_head_pos = Position {
+                                x: current_head_pos.x,
+                                y: current_head_pos.y + 1,
+                            }
+                        }
+                        "D" => {
+                            current_head_pos = Position {
+                                x: current_head_pos.x,
+                                y: current_head_pos.y - 1,
+                            }
+                        }
+                        _ => {}
+                    }
                     current_tail_pos = calculate_new_tail(current_head_pos, current_tail_pos);
                     tail_positions.insert(current_tail_pos);
                 }
@@ -59,6 +52,72 @@ pub fn problem1() {
         }
     }
     println!("Day 9, Problem 1: {:?}", tail_positions.len());
+}
+
+pub fn problem2() {
+    let contents = include_str!("input.txt");
+    let mut tail_positions: HashSet<Position> = HashSet::new();
+
+    let mut current_head_pos = Position { x: 0, y: 0 };
+    let mut current_tail_pos = Position { x: 0, y: 0 };
+    let mut knots = vec![
+        Position { x: 0, y: 0 },
+        Position { x: 0, y: 0 },
+        Position { x: 0, y: 0 },
+        Position { x: 0, y: 0 },
+        Position { x: 0, y: 0 },
+        Position { x: 0, y: 0 },
+        Position { x: 0, y: 0 },
+        Position { x: 0, y: 0 },
+    ];
+    tail_positions.insert(current_tail_pos.clone());
+
+    for head_move in contents.split("\n") {
+        match head_move.split(" ").collect::<Vec<&str>>().as_slice() {
+            [dir, val] => {
+                for _ in 0..val.parse::<usize>().unwrap() {
+                    match *dir {
+                        "L" => {
+                            current_head_pos = Position {
+                                x: current_head_pos.x - 1,
+                                y: current_head_pos.y,
+                            }
+                        }
+                        "R" => {
+                            current_head_pos = Position {
+                                x: current_head_pos.x + 1,
+                                y: current_head_pos.y,
+                            }
+                        }
+                        "U" => {
+                            current_head_pos = Position {
+                                x: current_head_pos.x,
+                                y: current_head_pos.y + 1,
+                            }
+                        }
+                        "D" => {
+                            current_head_pos = Position {
+                                x: current_head_pos.x,
+                                y: current_head_pos.y - 1,
+                            }
+                        }
+                        _ => {}
+                    }
+
+                    let mut previous_pos = current_head_pos;
+                    for knot in &mut knots {
+                        previous_pos = calculate_new_tail(previous_pos, knot.clone());
+                        knot.x = previous_pos.x;
+                        knot.y = previous_pos.y;
+                    }
+                    current_tail_pos = calculate_new_tail(previous_pos, current_tail_pos);
+                    tail_positions.insert(current_tail_pos);
+                }
+            }
+            _ => {}
+        }
+    }
+    println!("Day 9, Problem 2: {:?}", tail_positions.len());
 }
 
 fn calculate_new_tail(head: Position, tail: Position) -> Position {
@@ -156,94 +215,4 @@ fn calculate_new_tail(head: Position, tail: Position) -> Position {
         _ => {}
     }
     new_tail
-}
-pub fn problem2() {
-    let contents = include_str!("input.txt");
-    let mut tail_positions: HashSet<Position> = HashSet::new();
-
-    let mut current_head_pos = Position { x: 0, y: 0 };
-    let mut current_tail_pos = Position { x: 0, y: 0 };
-    let mut knots = vec![
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-    ];
-    tail_positions.insert(current_tail_pos.clone());
-
-    for head_move in contents.split("\n") {
-        match head_move.split(" ").collect::<Vec<&str>>().as_slice() {
-            ["L", val] => {
-                for _ in 0..val.parse::<usize>().unwrap() {
-                    current_head_pos = Position {
-                        x: current_head_pos.x - 1,
-                        y: current_head_pos.y,
-                    };
-
-                    let mut previous_pos = current_head_pos;
-                    for knot in &mut knots {
-                        previous_pos = calculate_new_tail(previous_pos, knot.clone());
-                        knot.x = previous_pos.x;
-                        knot.y = previous_pos.y;
-                    }
-                    current_tail_pos = calculate_new_tail(previous_pos, current_tail_pos);
-                    tail_positions.insert(current_tail_pos);
-                }
-            }
-            ["R", val] => {
-                for _ in 0..val.parse::<usize>().unwrap() {
-                    current_head_pos = Position {
-                        x: current_head_pos.x + 1,
-                        y: current_head_pos.y,
-                    };
-                    let mut previous_pos = current_head_pos;
-                    for knot in &mut knots {
-                        previous_pos = calculate_new_tail(previous_pos, knot.clone());
-                        knot.x = previous_pos.x;
-                        knot.y = previous_pos.y;
-                    }
-                    current_tail_pos = calculate_new_tail(previous_pos, current_tail_pos);
-                    tail_positions.insert(current_tail_pos);
-                }
-            }
-            ["U", val] => {
-                for _ in 0..val.parse::<usize>().unwrap() {
-                    current_head_pos = Position {
-                        x: current_head_pos.x,
-                        y: current_head_pos.y + 1,
-                    };
-                    let mut previous_pos = current_head_pos;
-                    for knot in &mut knots {
-                        previous_pos = calculate_new_tail(previous_pos, knot.clone());
-                        knot.x = previous_pos.x;
-                        knot.y = previous_pos.y;
-                    }
-                    current_tail_pos = calculate_new_tail(previous_pos, current_tail_pos);
-                    tail_positions.insert(current_tail_pos);
-                }
-            }
-            ["D", val] => {
-                for _ in 0..val.parse::<usize>().unwrap() {
-                    current_head_pos = Position {
-                        x: current_head_pos.x,
-                        y: current_head_pos.y - 1,
-                    };
-                    let mut previous_pos = current_head_pos;
-                    for knot in &mut knots {
-                        previous_pos = calculate_new_tail(previous_pos, knot.clone());
-                        knot.x = previous_pos.x;
-                        knot.y = previous_pos.y;
-                    }
-                    current_tail_pos = calculate_new_tail(previous_pos, current_tail_pos);
-                    tail_positions.insert(current_tail_pos);
-                }
-            }
-            _ => {}
-        }
-    }
-    println!("Day 9, Problem 2: {:?}", tail_positions.len());
 }

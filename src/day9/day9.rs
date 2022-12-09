@@ -60,16 +60,10 @@ pub fn problem2() {
 
     let mut current_head_pos = Position { x: 0, y: 0 };
     let mut current_tail_pos = Position { x: 0, y: 0 };
-    let mut knots = vec![
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-        Position { x: 0, y: 0 },
-    ];
+    let mut knots = Vec::new();
+    for _ in 0..8 {
+        knots.push(Position { x: 0, y: 0 })
+    }
     tail_positions.insert(current_tail_pos.clone());
 
     for head_move in contents.split("\n") {

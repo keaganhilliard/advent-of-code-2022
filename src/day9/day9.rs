@@ -104,38 +104,24 @@ fn calculate_new_tail(head: Position, tail: Position) -> Position {
 
     if x_diff.abs() > 1 {
         return Position {
-            x: if x_diff > 1 {
-                tail.x + 1
-            } else if x_diff < -1 {
-                tail.x - 1
-            } else {
-                tail.x
-            },
-            y: if y_diff > 0 {
-                tail.y + 1
-            } else if y_diff < 0 {
-                tail.y - 1
-            } else {
-                tail.y
-            },
+            x: tail.x + get_adder(x_diff, 1),
+            y: tail.y + get_adder(y_diff, 0),
         };
     } else if y_diff.abs() > 1 {
         return Position {
-            x: if x_diff > 0 {
-                tail.x + 1
-            } else if x_diff < 0 {
-                tail.x - 1
-            } else {
-                tail.x
-            },
-            y: if y_diff > 1 {
-                tail.y + 1
-            } else if y_diff < 1 {
-                tail.y - 1
-            } else {
-                tail.y
-            },
+            x: tail.x + get_adder(x_diff, 0),
+            y: tail.y + get_adder(y_diff, 1),
         };
     }
     tail
+}
+
+fn get_adder(diff: i32, limit: i32) -> i32 {
+    if diff > limit {
+        1
+    } else if diff < limit {
+        -1
+    } else {
+        0
+    }
 }

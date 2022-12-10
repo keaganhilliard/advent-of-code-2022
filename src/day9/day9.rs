@@ -99,98 +99,43 @@ pub fn problem2() {
 }
 
 fn calculate_new_tail(head: Position, tail: Position) -> Position {
-    let mut new_tail = tail;
     let x_diff = head.x - tail.x;
     let y_diff = head.y - tail.y;
-    match x_diff {
-        x if x > 1 => {
-            new_tail = Position {
-                x: new_tail.x + 1,
-                y: new_tail.y,
-            };
-            match y_diff {
-                y if y > 0 => {
-                    return Position {
-                        x: new_tail.x,
-                        y: new_tail.y + 1,
-                    };
-                }
-                y if y < 0 => {
-                    return Position {
-                        x: new_tail.x,
-                        y: new_tail.y - 1,
-                    };
-                }
-                _ => {}
-            }
-        }
-        x if x < -1 => {
-            new_tail = Position {
-                x: new_tail.x - 1,
-                y: new_tail.y,
-            };
-            match y_diff {
-                y if y > 0 => {
-                    return Position {
-                        x: new_tail.x,
-                        y: new_tail.y + 1,
-                    };
-                }
-                y if y < 0 => {
-                    return Position {
-                        x: new_tail.x,
-                        y: new_tail.y - 1,
-                    };
-                }
-                _ => {}
-            }
-        }
-        _ => {}
+
+    if x_diff.abs() > 1 {
+        return Position {
+            x: if x_diff > 1 {
+                tail.x + 1
+            } else if x_diff < -1 {
+                tail.x - 1
+            } else {
+                tail.x
+            },
+            y: if y_diff > 0 {
+                tail.y + 1
+            } else if y_diff < 0 {
+                tail.y - 1
+            } else {
+                tail.y
+            },
+        };
+    } else if y_diff.abs() > 1 {
+        return Position {
+            x: if x_diff > 0 {
+                tail.x + 1
+            } else if x_diff < 0 {
+                tail.x - 1
+            } else {
+                tail.x
+            },
+            y: if y_diff > 1 {
+                tail.y + 1
+            } else if y_diff < 1 {
+                tail.y - 1
+            } else {
+                tail.y
+            },
+        };
     }
-    match y_diff {
-        y if y > 1 => {
-            new_tail = Position {
-                x: new_tail.x,
-                y: new_tail.y + 1,
-            };
-            match x_diff {
-                x if x > 0 => {
-                    return Position {
-                        x: new_tail.x + 1,
-                        y: new_tail.y,
-                    };
-                }
-                x if x < 0 => {
-                    return Position {
-                        x: new_tail.x - 1,
-                        y: new_tail.y,
-                    };
-                }
-                _ => {}
-            }
-        }
-        y if y < -1 => {
-            new_tail = Position {
-                x: new_tail.x,
-                y: new_tail.y - 1,
-            };
-            match x_diff {
-                diff if diff > 0 => {
-                    return Position {
-                        x: new_tail.x + 1,
-                        y: new_tail.y,
-                    };
-                }
-                diff if diff < 0 => {
-                    return Position {
-                        x: new_tail.x - 1,
-                        y: new_tail.y,
-                    };
-                }
-                _ => {}
-            }
-        }
-        _ => {}
-    }
-    new_tail
+    tail
 }

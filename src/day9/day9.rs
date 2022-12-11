@@ -6,12 +6,18 @@ struct Position {
     y: i32,
 }
 
+impl Position {
+    fn new() -> Self {
+        Position { x: 0, y: 0 }
+    }
+}
+
 pub fn problem1() {
     let contents = include_str!("input.txt");
     let mut tail_positions: HashSet<Position> = HashSet::new();
 
-    let mut current_head_pos = Position { x: 0, y: 0 };
-    let mut current_tail_pos = Position { x: 0, y: 0 };
+    let mut current_head_pos = Position::new();
+    let mut current_tail_pos = Position::new();
     tail_positions.insert(current_tail_pos.clone());
     for head_move in contents.split("\n") {
         match head_move.split(" ").collect::<Vec<&str>>().as_slice() {
@@ -32,11 +38,11 @@ pub fn problem2() {
     let contents = include_str!("input.txt");
     let mut tail_positions: HashSet<Position> = HashSet::new();
 
-    let mut current_head_pos = Position { x: 0, y: 0 };
-    let mut current_tail_pos = Position { x: 0, y: 0 };
+    let mut current_head_pos = Position::new();
+    let mut current_tail_pos = Position::new();
     let mut knots = Vec::new();
     for _ in 0..8 {
-        knots.push(Position { x: 0, y: 0 })
+        knots.push(Position::new())
     }
     tail_positions.insert(current_tail_pos.clone());
 

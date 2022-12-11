@@ -116,53 +116,55 @@ impl Monkey {
 }
 
 fn parse_monkeys(contents: &str) -> (Vec<Monkey>, i64) {
-    let mut monkey_index = 0;
-    let mut divisor = 0;
-    let mut true_val = 0;
-    let mut monkey_op = Operation::None;
-    let mut monkey_items = Vec::new();
     let mut monkeys = Vec::new();
     let mut modulo = 1;
 
-    for line in contents.lines() {
-        match line.trim().split(" ").collect::<Vec<&str>>().as_slice() {
-            ["Monkey", str_index] => {
-                monkey_index = str_index.replace(":", "").parse::<i64>().unwrap();
-            }
-            ["Starting", "items:", items @ ..] => {
-                for item in items {
-                    monkey_items.push(item.replace(",", "").parse::<i64>().unwrap());
+    for monkey_lines in contents.split("\n\n") {
+        let mut index = 0;
+        let mut divisor = 0;
+        let mut true_val = 0;
+        let mut op = Operation::None;
+        let mut items = Vec::new();
+        for line in monkey_lines.lines() {
+            match line.trim().split(" ").collect::<Vec<&str>>().as_slice() {
+                ["Monkey", str_index] => {
+                    index = str_index.replace(":", "").parse::<i64>().unwrap();
                 }
-            }
-            ["Test:", "divisible", "by", val] => {
-                divisor = val.parse().unwrap();
-                modulo *= divisor;
-            }
-            ["If", "true:", "throw", "to", "monkey", to] => {
-                true_val = to.parse().unwrap();
-            }
-            ["If", "false:", "throw", "to", "monkey", to] => {
-                monkeys.push(Monkey {
-                    index: monkey_index,
-                    items: monkey_items,
-                    op: monkey_op.clone(),
-                    true_val,
-                    false_val: to.parse().unwrap(),
-                    divisor,
-                    inspection_count: 0,
-                });
-                monkey_items = Vec::new()
-            }
-            ["Operation:", "new", "=", "old", op, val] => {
-                if *val == "old" {
-                    monkey_op = Operation::Square;
-                } else if *op == "+" {
-                    monkey_op = Operation::Add(val.parse().unwrap())
-                } else if *op == "*" {
-                    monkey_op = Operation::Multiply(val.parse().unwrap())
+                ["Starting", "items:", str_items @ ..] => {
+                    for item in str_items {
+                        items.push(item.replace(",", "").parse::<i64>().unwrap());
+                    }
                 }
+                ["Test:", "divisible", "by", val] => {
+                    divisor = val.parse().unwrap();
+                    modulo *= divisor;
+                }
+                ["If", "true:", "throw", "to", "monkey", to] => {
+                    true_val = to.parse().unwrap();
+                }
+                ["If", "false:", "throw", "to", "monkey", to] => {
+                    let false_val = to.parse().unwrap();
+                    monkeys.push(Monkey {
+                        index,
+                        op,
+                        true_val,
+                        false_val,
+                        divisor,
+                        items: items.clone(),
+                        inspection_count: 0,
+                    });
+                }
+                ["Operation:", "new", "=", "old", str_op, val] => {
+                    if *val == "old" {
+                        op = Operation::Square;
+                    } else if *str_op == "+" {
+                        op = Operation::Add(val.parse().unwrap())
+                    } else if *str_op == "*" {
+                        op = Operation::Multiply(val.parse().unwrap())
+                    }
+                }
+                _ => {}
             }
-            _ => {}
         }
     }
     (monkeys, modulo)

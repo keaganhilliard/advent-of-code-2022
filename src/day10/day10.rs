@@ -35,7 +35,7 @@ pub fn problem2() {
 
     let mut cycle: usize = 0;
     let mut x: i32 = 1;
-    let mut rows = vec![vec!["."; 40]; 6];
+    let mut rows = vec![vec![" "; 40]; 6];
     for op in contents.split("\n") {
         match op.split(" ").collect::<Vec<&str>>().as_slice() {
             ["addx", val] => {

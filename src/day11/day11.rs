@@ -18,15 +18,20 @@ pub fn problem2() {
     );
 }
 
-fn get_top_two_product(mut monkeys: Vec<Monkey>, modulo: i64, rounds: usize, divide: bool) -> i64 {
+fn get_top_two_product(
+    mut monkeys: Vec<Monkey>,
+    destresser: i64,
+    rounds: usize,
+    divide: bool,
+) -> i64 {
     for _ in 0..rounds {
         for i in 0..monkeys.len() {
             for item in monkeys[i].items.clone() {
                 monkeys[i].inspection_count += 1;
                 let new_level = if divide {
-                    monkeys[i].operate(item) / modulo
+                    monkeys[i].operate(item) / destresser
                 } else {
-                    monkeys[i].operate(item) % modulo
+                    monkeys[i].operate(item) % destresser
                 };
                 if new_level % monkeys[i].divisor == 0 {
                     let true_val = monkeys[i].true_val as usize;

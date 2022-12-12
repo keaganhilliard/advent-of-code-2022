@@ -39,20 +39,14 @@ pub fn problem2() {
     for op in contents.split("\n") {
         match op.split(" ").collect::<Vec<&str>>().as_slice() {
             ["addx", val] => {
-                if should_draw(cycle, x) {
-                    rows[cycle / 40][cycle % 40] = "#";
-                }
+                draw(&mut rows, cycle, x);
                 cycle += 1;
-                if should_draw(cycle, x) {
-                    rows[cycle / 40][cycle % 40] = "#";
-                }
+                draw(&mut rows, cycle, x);
                 cycle += 1;
                 x += val.parse::<i32>().unwrap();
             }
             ["noop"] => {
-                if should_draw(cycle, x) {
-                    rows[cycle / 40][cycle % 40] = "#";
-                }
+                draw(&mut rows, cycle, x);
                 cycle += 1;
             }
             _ => {}
@@ -64,7 +58,9 @@ pub fn problem2() {
     }
 }
 
-fn should_draw(cycle: usize, x: i32) -> bool {
+fn draw(rows: &mut Vec<Vec<&str>>, cycle: usize, x: i32) {
     let col = (cycle % 40) as i32;
-    col >= x - 1 && col <= x + 1
+    if col >= x - 1 && col <= x + 1 {
+        rows[cycle / 40][cycle % 40] = "#";
+    }
 }

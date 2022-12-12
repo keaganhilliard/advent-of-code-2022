@@ -33,13 +33,12 @@ fn get_top_two_product(
                 } else {
                     monkeys[i].operate(item) % destresser
                 };
-                if new_level % monkeys[i].divisor == 0 {
-                    let true_val = monkeys[i].true_val as usize;
-                    monkeys[true_val].items.push(new_level);
+                let to_monkey = if new_level % monkeys[i].divisor == 0 {
+                    monkeys[i].true_val as usize
                 } else {
-                    let false_val = monkeys[i].false_val as usize;
-                    monkeys[false_val].items.push(new_level);
-                }
+                    monkeys[i].false_val as usize
+                };
+                monkeys[to_monkey].items.push(new_level);
             }
             monkeys[i].items.clear();
         }

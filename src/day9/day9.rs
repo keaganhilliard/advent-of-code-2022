@@ -83,17 +83,18 @@ fn calculate_new_tail(head: Position, tail: Position) -> Position {
     let y_diff = head.y - tail.y;
 
     if x_diff.abs() > 1 {
-        return Position {
+        Position {
             x: tail.x + get_adder(x_diff, 1),
             y: tail.y + get_adder(y_diff, 0),
-        };
+        }
     } else if y_diff.abs() > 1 {
-        return Position {
+        Position {
             x: tail.x + get_adder(x_diff, 0),
             y: tail.y + get_adder(y_diff, 1),
-        };
+        }
+    } else {
+        tail
     }
-    tail
 }
 
 fn get_adder(diff: i32, limit: i32) -> i32 {

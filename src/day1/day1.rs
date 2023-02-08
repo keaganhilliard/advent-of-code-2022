@@ -10,7 +10,7 @@ fn get_elves() -> Vec<Elf> {
 
     for elf_str in contents.split("\n\n") {
         let mut total_calories = 0;
-        for calories in elf_str.split("\n") {
+        for calories in elf_str.lines() {
             if let Ok(p) = calories.parse::<i32>() {
                 total_calories += p;
             }
@@ -22,7 +22,7 @@ fn get_elves() -> Vec<Elf> {
 
     elves.sort_by(|a, b| b.calories.partial_cmp(&a.calories).unwrap());
 
-    return elves;
+    elves
 }
 
 pub fn problem1() {

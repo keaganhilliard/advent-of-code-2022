@@ -99,12 +99,12 @@ pub fn problem2() {
 }
 
 fn parse_moves(move_crate: &str) -> (usize, usize, usize) {
-    return match move_crate.split(" ").collect::<Vec<&str>>().as_slice() {
+    match move_crate.split(" ").collect::<Vec<&str>>().as_slice() {
         &["move", count, "from", from, "to", to] => (
             count.parse::<usize>().unwrap(),
             from.parse::<usize>().unwrap(),
             to.parse::<usize>().unwrap(),
         ),
         _ => (0, 0, 0),
-    };
+    }
 }
